@@ -5,6 +5,8 @@ from rest_framework.response import Response
 import requests
 from datetime import datetime
 import parser
+from .serializers import BoardSerializer, CarSerializer
+from .models import Car
 
 # Create your views here.
 
@@ -20,18 +22,14 @@ def about(request):
 def cars(request):
     return render(request, 'cars.html')
 
-
-from .serializers import BoardSerializer, CarSerializer
-from .models import Car
-
 def cars_json(request):
     cars = Car.objects.all()
     return JsonResponse(CarSerializer(cars, many = True).data, safe=False)
 
 def north_station_departure_board_json(request):
     url = 'https://api-v3.mbta.com/predictions?page%5Boffset%5D=0&page%5Blimit%5D=10&sort=departure_time&include=schedule%2Cvehicle%2Ctrip&filter%5Bdirection_id%5D=0&filter%5Bstop%5D=place-north'
-    r = requests.get(url)
-    data_json = r.json()
+    informationFromBoardAPI = requests.get(url)
+    data_json = informationFromBoardAPI.json()
 
     allTrainsDict = {}
 
