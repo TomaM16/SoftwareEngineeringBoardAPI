@@ -1,0 +1,15 @@
+<table border="1">
+    <tr>
+      <th>TIME</th>
+      <th>DESTINATION</th>
+      <th>TRAIN#</th>
+      <th>STATUS</th>
+    </tr>
+    {% for key, values in allTrainsDict %}
+    <tr>
+        {% for value in values %}
+            <td>{{ value }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
